@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +25,9 @@ class PostNewController extends Controller
 
         $form = $this->createFormBuilder($post)
             ->add('title', TextType::class)
-            ->add('content', TextType::class)
+            ->add('slug', TextType::class)
+            ->add('date', DateType::class)
+            ->add('content', TextareaType::class)
             ->add('save', SubmitType::class, ['label' => 'Создать'])
             ->getForm();
 
@@ -32,16 +36,13 @@ class PostNewController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
-            $task = $form->getData();
-            var_dump($task);exit;
+            $post = $form->getData();
 
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
-            // $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($task);
-            // $entityManager->flush();
-
-            return $this->redirectToRoute('task_success');
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($post);
+            $entityManager->flush();
         }
 
         return $this->render('post_new/index.html.twig', [

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">{{ post.title }}</h1>
+            <p class="lead text-muted">Пример сокращенного текста.</p>
+        </div>
+    </section>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                {{  post.content }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
