@@ -29,7 +29,6 @@ services:
     mysqldb:
         image: mysql:5.7
         restart: always
-        container_name: ${MYSQL_HOST}
         env_file:
             - ".env"
         environment:

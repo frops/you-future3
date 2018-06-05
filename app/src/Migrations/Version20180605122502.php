@@ -8,14 +8,14 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20180604194348 extends AbstractMigration
+final class Version20180605122502 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE UNIQUE INDEX post_unique ON post (date, slug)');
+        $this->addSql('CREATE UNIQUE INDEX post_date_slug ON post (date, slug)');
     }
 
     public function down(Schema $schema) : void
@@ -23,6 +23,6 @@ final class Version20180604194348 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP INDEX post_unique ON post');
+        $this->addSql('DROP INDEX post_date_slug ON post');
     }
 }

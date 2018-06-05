@@ -34,14 +34,48 @@ class PostNewController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $post = $form->getData();
-
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($post);
+            $entityManager->persist($form->getData());
+            $entityManager->flush();
+
+            $this->addFlash('notice', 'Сохранено');
+        }
+
+        return $this->render('post_new/index.html.twig', [
+            'controller_name' => 'PostNewController',
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/post/edit/{id}", name="post_edit")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function edit($id, Request $request)
+    {
+        $post = $this->getDoctrine()
+            ->getRepository(Post::class)
+            ->find($id);
+
+        if (!$post) {
+            throw $this->createNotFoundException("Такой записи нет");
+        }
+
+        $form = $this->createFormBuilder($post)
+            ->add('title', TextType::class)
+            ->add('slug', TextType::class)
+            ->add('date', DateType::class)
+            ->add('content', TextareaType::class)
+            ->add('save', SubmitType::class, ['label' => 'Создать'])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($form->getData());
             $entityManager->flush();
         }
 

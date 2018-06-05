@@ -3,12 +3,18 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
- * @UniqueEntity(fields={"date","slug"})
+ * @ORM\HasLifecycleCallbacks()
+ * @Table(uniqueConstraints={
+ *        @UniqueConstraint(name="post_date_slug",
+ *            columns={"date", "slug"})
+ *    }
+ * )
  */
 class Post
 {
@@ -127,5 +133,15 @@ class Post
         $this->seoKeywords = $seoKeywords;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function performContentPreSave()
+    {
+        $parseDown = new \Parsedown();
+        $parseDown->setSafeMode(true);
+        $this->content = $parseDown->text($this->content);
     }
 }
