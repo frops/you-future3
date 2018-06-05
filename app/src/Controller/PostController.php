@@ -5,10 +5,10 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * @Route("/post")
@@ -16,75 +16,96 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends Controller
 {
     /**
-     * @Route("/", name="post_index", methods="GET")
+     * @Route("/latest", name="post_latest", methods="GET")
      */
-    public function index(PostRepository $postRepository): Response
+    public function latest(PostRepository $postRepository): Response
     {
-        return $this->render('post/index.html.twig', ['posts' => $postRepository->findAll()]);
+        return $this->render('post/latest.html.twig', ['posts' => $postRepository->findAll()]);
     }
 
     /**
-     * @Route("/new", name="post_new", methods="GET|POST")
+     * @Route("/{date}/{slug}", name="post_show", methods="GET")
+     * @param $date
+     * @param $slug
+     * @param PostRepository $postRepository
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function new(Request $request): Response
+    public function show($date, $slug, PostRepository $postRepository): Response
     {
-        $post = new Post();
-        $form = $this->createForm(PostType::class, $post);
-        $form->handleRequest($request);
+        $post = $this->getDoctrine()
+            ->getRepository(Post::class)
+            ->findOneBy(['date' => \DateTime::createFromFormat("Y-m-d", $date), 'slug' => $slug]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
-            $em->flush();
-
-            return $this->redirectToRoute('post_index');
+        if (!$post) {
+            throw $this->createNotFoundException("Запись не найдена");
         }
 
-        return $this->render('post/new.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="post_show", methods="GET")
-     */
-    public function show(Post $post): Response
-    {
         return $this->render('post/show.html.twig', ['post' => $post]);
     }
 
     /**
-     * @Route("/{id}/edit", name="post_edit", methods="GET|POST")
+     * @Route("/new", name="post_new")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit(Request $request, Post $post): Response
+    public function new(Request $request)
     {
+        $post = new Post();
+        $post->setDate(new \DateTime('now'));
+
         $form = $this->createForm(PostType::class, $post);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($form->getData());
+            $entityManager->flush();
 
-            return $this->redirectToRoute('post_edit', ['id' => $post->getId()]);
+            $this->addFlash('notice', 'Сохранено');
+
+            return $this->redirectToRoute("post_show", ['date' => $post->getDate(), 'slug' => $post->getSlug()]);
         }
 
-        return $this->render('post/edit.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
+        return $this->render('post_new/index.html.twig', [
+            'controller_name' => 'PostNewController',
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/{id}", name="post_delete", methods="DELETE")
+     * @Route("/post/edit/{id}", name="post_edit")
+     * @param $date
+     * @param $slug
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function delete(Request $request, Post $post): Response
+    public function edit($date, $slug, Request $request)
     {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($post);
-            $em->flush();
+        $post = $this->getDoctrine()
+            ->getRepository(Post::class)
+            ->findOneBy(['date' => \DateTime::createFromFormat("Y-m-d", $date), 'slug' => $slug]);
+
+        if (!$post) {
+            throw $this->createNotFoundException("Запись не найдена");
         }
 
-        return $this->redirectToRoute('post_index');
+        $form = $this->createForm(PostType::class, $post);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($form->getData());
+            $entityManager->flush();
+
+            return $this->redirectToRoute("post_show", ['date' => $post->getDate(), 'slug' => $post->getSlug()]);
+        }
+
+        return $this->render('post_new/index.html.twig', [
+            'controller_name' => 'PostNewController',
+            'form' => $form->createView()
+        ]);
     }
 }

@@ -36,15 +36,21 @@ class PostRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Post
+    /**
+     * @param $date
+     * @param $slug
+     * @return Post|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findOneByDateAndSlug($date, $slug): ?Post
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('p.date = :date AND p.slug = :slug')
+            ->setParameter('date', $date)
+            ->setParameter('slug', $slug)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }
