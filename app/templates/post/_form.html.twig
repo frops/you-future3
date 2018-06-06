@@ -1,4 +1,95 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <div class="form-group">
+                {{ form_label(form.title) }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                <small class="form-text text-muted">Заголовок поста является же заголовком вкладки в браузере.</small>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.slug) }}
+                {{ form_errors(form.slug) }}
+                {{ form_widget(form.slug, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.date) }}
+                {{ form_errors(form.date) }}
+                {{ form_row(form.date) }}
+            </div>
+
+            <button class="btn btn-primary" id="btn_toggle_preview" onclick="toggle_preview();return false;">Preview</button>
+            <br>
+
+            <div class="form-group" id="block_content">
+                {{ form_label(form.content) }}
+
+                {{ form_errors(form.content) }}
+                {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': '30'}}) }}
+            </div>
+
+            <div class="row" id="preview_content">
+                <br>
+                <div class="col-md-12">
+
+                </div>
+            </div>
+
+            <div class="form-group" id="block_content">
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-success'}}) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+<script>
+    let preview = false;
+
+    function toggle_preview() {
+        let content = $("#form_content").val();
+
+        if (preview) {
+            $("#btn_toggle_preview").html("Preview");
+            $("#block_content").show();
+            $("#preview_content").hide();
+            preview = false;
+            return;
+        }
+
+        $("#btn_toggle_preview").addClass("btn-default").html("...");
+
+        $.ajax({
+            url: '/markdown/to-html',
+            type: 'post',
+            data: {
+                content: content,
+            },
+            success: function (data) {
+                $("#block_content").hide();
+                $("#preview_content").show();
+                $("#preview_content div").html(data);
+                $("#btn_toggle_preview").removeClass("btn-default").html("Content");
+                preview = true;
+            }
+        });
+    }
+</script>
+
+<style>
+    #preview_content {
+        display: none;
+    }
+
+    #preview_content div {
+        min-height: 734px;
+        border: 1px #ccc;
+        padding: 20px;
+    }
+</style>

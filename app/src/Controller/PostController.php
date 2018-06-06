@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use \Parsedown;
 
 /**
  * @Route("/post")
@@ -75,14 +76,16 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/post/edit/{id}", name="post_edit")
+     * @Route("/edit/{date}/{slug}", name="post_edit")
      * @param $date
      * @param $slug
      * @param Request $request
+     * @param Parsedown $parseDown
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit($date, $slug, Request $request)
+    public function edit($date, $slug, Request $request, Parsedown $parseDown)
     {
+        /** @var Post $post */
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
             ->findOneBy(['date' => \DateTime::createFromFormat("Y-m-d", $date), 'slug' => $slug]);
@@ -90,6 +93,8 @@ class PostController extends Controller
         if (!$post) {
             throw $this->createNotFoundException("Запись не найдена");
         }
+
+        $post->setContent($parseDown->text($post->getContent()));
 
         $form = $this->createForm(PostType::class, $post);
 

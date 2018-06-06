@@ -21,6 +21,7 @@ services:
         volumes:
             - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
             - "./app:/var/www/app"
+        #command: [sh, -c, "cd /var/www/app"]
     composer:
         image: "composer"
         volumes:

@@ -1,45 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Post index{% endblock %}
+{% block title %}Последние записи{% endblock %}
 
 {% block body %}
-    <h1>Post index</h1>
+<div class="container">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Свежие записи</h1>
+                <p class="lead text-muted">Пример сокращенного текста.</p>
+            </div>
+        </section>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Slug</th>
-                <th>Content</th>
-                <th>Date</th>
-                <th>SeoDescr</th>
-                <th>SeoKeywords</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
         {% for post in posts %}
-            <tr>
-                <td>{{ post.id }}</td>
-                <td>{{ post.title }}</td>
-                <td>{{ post.slug }}</td>
-                <td>{{ post.content }}</td>
-                <td>{{ post.date ? post.date|date('Y-m-d') : '' }}</td>
-                <td>{{ post.seoDescr }}</td>
-                <td>{{ post.seoKeywords }}</td>
-                <td>
-                    <a href="{{ path('post_show', {'id': post.id}) }}">show</a>
-                    <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
-                </td>
-            </tr>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p>{{ post.date ? post.date|date('Y-m-d') : '' }}</p>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="{{ path('post_show', {'date': post.date | date("Y-m-d"), 'slug': post.slug}) }}">Читать</a>
+            </div>
+        </div>
         {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
+            Нет записей
         {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('post_new') }}">Create new</a>
+</div>
 {% endblock %}
