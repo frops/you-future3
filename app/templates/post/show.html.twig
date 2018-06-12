@@ -25,6 +25,8 @@
                 <div class="col-md-8 offset-md-2">
                     <article>
                         {{  post.getHtmlContent | raw}}
+                        <br>
+                        <a href="https://you-future.ru{{ app.request.getBaseUrl ~ app.request.getPathInfo }}">Читать на сайте</a>
                     </article>
                 </div>
             </div>
