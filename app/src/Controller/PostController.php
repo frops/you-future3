@@ -7,9 +7,9 @@ use App\Form\PostType;
 use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \Parsedown;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/post")
@@ -18,25 +18,28 @@ class PostController extends Controller
 {
     /**
      * @Route("/latest", name="post_latest", methods="GET")
+     * @param PostRepository $postRepository
+     * @return Response
      */
     public function latest(PostRepository $postRepository): Response
     {
-        return $this->render('post/latest.html.twig', ['posts' => $postRepository->findAll()]);
+        return $this->render('post/latest.html.twig', ['posts' => $postRepository->getLatest()]);
     }
 
     /**
-     * @Route("/{date}/{slug}", name="post_show", methods="GET")
-     * @param $date
+     * @Route("/{year}/{month}/{day}/{slug}", name="post_show", methods="GET")
+     * @param $year
+     * @param $month
+     * @param $day
      * @param $slug
      * @param PostRepository $postRepository
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show($date, $slug, PostRepository $postRepository): Response
+    public function show($year, $month, $day, $slug, PostRepository $postRepository): Response
     {
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findOneBy(['date' => \DateTime::createFromFormat("Y-m-d", $date), 'slug' => $slug]);
+            ->findOneBy(['date' => \DateTime::createFromFormat("Y-m-d", "{$year}-{$month}-{$day}"), 'slug' => $slug]);
 
         if (!$post) {
             throw $this->createNotFoundException("Запись не найдена");
@@ -66,35 +69,36 @@ class PostController extends Controller
 
             $this->addFlash('notice', 'Сохранено');
 
-            return $this->redirectToRoute("post_show", ['date' => $post->getDate(), 'slug' => $post->getSlug()]);
+            $date = $post->getDate();
+            list($year, $month, $day) = $date->format("Y-m-d");
+
+            return $this->redirectToRoute('post_show', ['year' => $year, 'month' => $month, 'day' => $day, 'slug' => $post->getSlug()]);
         }
 
-        return $this->render('post_new/index.html.twig', [
+        return $this->render('post/new.html.twig', [
             'controller_name' => 'PostNewController',
             'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/edit/{date}/{slug}", name="post_edit")
-     * @param $date
+     * @Route("/edit/{year}/{month}/{day}/{slug}", name="post_edit")
+     * @param $year
+     * @param $month
+     * @param $day
      * @param $slug
      * @param Request $request
-     * @param Parsedown $parseDown
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit($date, $slug, Request $request, Parsedown $parseDown)
+    public function edit($year, $month, $day, $slug, Request $request)
     {
-        /** @var Post $post */
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findOneBy(['date' => \DateTime::createFromFormat("Y-m-d", $date), 'slug' => $slug]);
+            ->findOneBy(['date' => \DateTime::createFromFormat("Y-m-d", "{$year}-{$month}-{$day}"), 'slug' => $slug]);
 
         if (!$post) {
             throw $this->createNotFoundException("Запись не найдена");
         }
-
-        $post->setContent($parseDown->text($post->getContent()));
 
         $form = $this->createForm(PostType::class, $post);
 
@@ -105,10 +109,13 @@ class PostController extends Controller
             $entityManager->persist($form->getData());
             $entityManager->flush();
 
-            return $this->redirectToRoute("post_show", ['date' => $post->getDate(), 'slug' => $post->getSlug()]);
+            $date = $post->getDate();
+            list($year, $month, $day) = $date->format("Y-m-d");
+
+            return $this->redirectToRoute('post_show', ['year' => $year, 'month' => $month, 'day' => $day, 'slug' => $post->getSlug()]);
         }
 
-        return $this->render('post_new/index.html.twig', [
+        return $this->render('post/edit.html.twig', [
             'controller_name' => 'PostNewController',
             'form' => $form->createView()
         ]);

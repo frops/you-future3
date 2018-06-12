@@ -19,6 +19,8 @@ class PostType extends AbstractType
             ->add('slug', TextType::class)
             ->add('date', DateType::class)
             ->add('content', TextareaType::class)
+            ->add('seoDescr', TextareaType::class)
+            ->add('seoKeywords', TextType::class)
             ->add('save', SubmitType::class, ['label' => 'Создать'])
             ->getForm();
     }

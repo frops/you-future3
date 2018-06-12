@@ -1,20 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ post.title }}{% endblock %}
+{% block seoDescr %}{{ post.seoDescr | e }}{% endblock %}
+{% block seoKeywords %}{{ post.seoKeywords | e }}{% endblock %}
+{% block ogType %}article{% endblock %}
+
+{% block og %}
+    <meta property="article:author" content="Ильдар Асанов" />
+{% endblock %}
 
 {% block body %}
     <section class="jumbotron text-center">
         <div class="container">
-            <h1 class="jumbotron-heading">{{ post.title }}</h1>
-            <p class="lead text-muted">Пример сокращенного текста.</p>
+            <h1 class="jumbotron-heading">{{ post.title | e }}</h1>
+            {% if post.seoDescr != "" %}
+            <p class="lead text-muted">{{ post.seoDescr | e }}</p>
+            {%  endif %}
         </div>
     </section>
 
-    <div class="album py-5 bg-light">
+    <div class="album py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    {{  post.content | raw}}
+                    <article>
+                        {{  post.getHtmlContent | raw}}
+                    </article>
                 </div>
             </div>
         </div>

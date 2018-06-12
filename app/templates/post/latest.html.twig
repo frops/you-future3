@@ -12,12 +12,12 @@
         </section>
 
         {% for post in posts %}
-        <div class="card">
+        <div class="card mb-1">
             <div class="card-body">
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p>{{ post.date ? post.date|date('Y-m-d') : '' }}</p>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="{{ path('post_show', {'date': post.date | date("Y-m-d"), 'slug': post.slug}) }}">Читать</a>
+                <p class="card-text">{{  post.seoDescr }}</p>
+                <a class="btn btn-sm btn-outline-info" href="{{ path('post_show', {'year': post.date | date("Y"), 'month': post.date | date("m"), 'day': post.date | date("d"), 'slug': post.slug}) }}">Читать</a>
             </div>
         </div>
         {% else %}

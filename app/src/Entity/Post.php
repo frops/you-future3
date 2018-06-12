@@ -92,6 +92,13 @@ class Post
         return $this->content;
     }
 
+    public function getHtmlContent(): ?string
+    {
+        $parseDown = new \Parsedown();
+        $parseDown->setSafeMode(true);
+        return $parseDown->parse($this->content);
+    }
+
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -140,8 +147,8 @@ class Post
      */
     public function performContentPreSave()
     {
-        $parseDown = new \Parsedown();
-        $parseDown->setSafeMode(true);
-        $this->content = $parseDown->text($this->content);
+//        $parseDown = new \Parsedown();
+//        $parseDown->setSafeMode(true);
+//        $this->content = $parseDown->text($this->content);
     }
 }
