@@ -19,6 +19,7 @@
     <meta property="og:type" content="{% block ogType %}{% endblock %}" />
     <meta property="og:url" content="https://you-future.ru{{ app.request.getBaseUrl ~ app.request.getPathInfo }}" />
     <meta property="og:image" content="https://you-future.ru/img/yf_logo.jpg" />
+    <meta name="telegram:channel" content="@you_future">
 
     {% block og %}{% endblock %}
 
@@ -48,7 +49,7 @@
     <div class="navbar navbar-dark bg-dark box-shadow">
         <div class="container d-flex justify-content-between">
             <a href="/" class="navbar-brand d-flex align-items-center">
-                <strong>А что дальше?</strong>
+                <strong>А что же дальше?</strong>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
