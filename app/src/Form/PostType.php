@@ -21,6 +21,7 @@ class PostType extends AbstractType
             ->add('content', TextareaType::class)
             ->add('seoDescr', TextareaType::class)
             ->add('seoKeywords', TextType::class)
+            ->add('subTitle', TextareaType::class)
             ->add('save', SubmitType::class, ['label' => 'Создать'])
             ->getForm();
     }

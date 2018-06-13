@@ -30,6 +30,13 @@
 </div>
 
 <div class="form-group">
+    {{ form_label(form.subTitle) }}
+
+    {{ form_errors(form.subTitle) }}
+    {{ form_widget(form.subTitle, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+</div>
+
+<div class="form-group">
     {{ form_label(form.seoDescr) }}
 
     {{ form_errors(form.seoDescr) }}

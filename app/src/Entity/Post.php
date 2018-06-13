@@ -58,6 +58,11 @@ class Post
      */
     private $seoKeywords;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $subTitle;
+
     public function getId()
     {
         return $this->id;
@@ -150,5 +155,17 @@ class Post
 //        $parseDown = new \Parsedown();
 //        $parseDown->setSafeMode(true);
 //        $this->content = $parseDown->text($this->content);
+    }
+
+    public function getSubTitle(): ?string
+    {
+        return $this->subTitle;
+    }
+
+    public function setSubTitle(?string $subTitle): self
+    {
+        $this->subTitle = $subTitle;
+
+        return $this;
     }
 }

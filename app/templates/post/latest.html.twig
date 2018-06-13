@@ -7,7 +7,7 @@
         <section class="jumbotron text-center">
             <div class="container">
                 <h1 class="jumbotron-heading">Свежие записи</h1>
-                <p class="lead text-muted">Пример сокращенного текста.</p>
+                <hr>
             </div>
         </section>
 
@@ -16,7 +16,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p>{{ post.date ? post.date|date('Y-m-d') : '' }}</p>
-                <p class="card-text">{{  post.seoDescr }}</p>
+                <p class="card-text">{{  post.subTitle }}</p>
                 <a class="btn btn-sm btn-outline-info" href="{{ path('post_show', {'year': post.date | date("Y"), 'month': post.date | date("m"), 'day': post.date | date("d"), 'slug': post.slug}) }}">Читать</a>
             </div>
         </div>
