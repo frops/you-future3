@@ -14,7 +14,7 @@
         <div class="container">
             <h1 class="jumbotron-heading">{{ post.title | e }}</h1>
             {% if post.seoDescr != "" %}
-            <p class="lead text-muted">{{ post.seoDescr | e }}</p>
+            <subtitle class="lead text-muted">{{ post.seoDescr | e }}</subtitle>
             {%  endif %}
         </div>
     </section>
