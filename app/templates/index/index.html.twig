@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}А что дальше? Блог о том, что ждет нас в будущем.{% endblock %}
+{% block seoDescr %}Блог о том, что ждет нас будушем.{% endblock %}
+{% block seoKeywords %}будущее,наука,технологии{% endblock %}
+{% block ogType %}website{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">А что дальше? Блог о том, что ждет нас впереди.</h1>
+                <p class="lead text-muted">Размышления о будущем, что ждет нас, наших детей и внуков впереди.</p>
+                <p>Будущее совсем рядом, стремительно развиваются технологии, наука. Мы меняемся с каждым днем, появляются новые вещи, устройства, открытия.</p>
+            </div>
+        </section>
+
+        <h3>Свежие записи</h3>
+        <hr>
+        {% for post in posts %}
+            <div class="card mb-1">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p>{{ post.date ? post.date|date('Y-m-d') : '' }}</p>
+                    <p class="card-text">{{  post.subTitle }}</p>
+                    <a class="btn btn-sm btn-outline-info" href="{{ path('post_show', {'year': post.date | date("Y"), 'month': post.date | date("m"), 'day': post.date | date("d"), 'slug': post.slug}) }}">Читать</a>
+                </div>
+            </div>
+        {% else %}
+            Нет записей
+        {% endfor %}
+    </div>
+{% endblock %}

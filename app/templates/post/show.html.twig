@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block title %}{{ post.title }} | Блог о том, что нас ждет в будущем{% endblock %}
 {% block seoDescr %}{{ post.seoDescr | e }}{% endblock %}
 {% block seoKeywords %}{{ post.seoKeywords | e }}{% endblock %}
 {% block ogType %}article{% endblock %}
@@ -20,7 +20,7 @@
         </div>
     </section>
 
-    <div class="album py-5">
+    <div class="album">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 offset-md-2">

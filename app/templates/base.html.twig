@@ -31,13 +31,18 @@
 
     <meta property="og:title" content="{{ block('title') }}" />
     <meta property="og:type" content="{% block ogType %}{% endblock %}" />
-    <meta property="og:url" content="https://you-future.ru{{ app.request.getBaseUrl ~ app.request.getPathInfo }}" />
-    <meta property="og:image" content="https://you-future.ru/img/yf_logo.jpg" />
+    <meta property="og:url" content="{{ app.request.getSchemeAndHttpHost() }}{{ app.request.getBaseUrl ~ app.request.getPathInfo }}" />
+    <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() }}/img/yf_logo.jpg" />
     <meta name="telegram:channel" content="@you_future">
 
     {% block og %}{% endblock %}
 
     <meta charset="UTF-8">
+
+    {% if app.request.getSchemeAndHttpHost() matches '{https://you-future.ru}' %}
+        {% include 'blocks/ga.html.twig' %}
+    {% endif %}
+
     {% block stylesheets %}{% endblock %}
 </head>
 <body>

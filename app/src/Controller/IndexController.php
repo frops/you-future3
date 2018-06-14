@@ -15,6 +15,15 @@ class IndexController extends Controller
      */
     public function index(PostRepository $postRepository)
     {
-        return $this->render('post/latest.html.twig', ['posts' => $postRepository->getLatest()]);
+        return $this->render('index/index.html.twig', ['posts' => $postRepository->getLatest()]);
+    }
+
+    /**
+     * @Route("/about", name="about")
+     */
+    public function about()
+    {
+        return $this->render('index/about.html.twig');
+
     }
 }
