@@ -1,0 +1,36 @@
+.bar{
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    margin-bottom: 35px;
+}
+.date{
+    background: url('/img/icons/calendar.png') no-repeat;
+    padding-left: 25px;
+    color: #aaa;
+    font-size: 13px;
+    display: inline-block;
+    margin-right: 15px;
+    background-position: 0% 52%;
+}
+.counter{
+    background: url('/img/icons/view.png') no-repeat;
+    padding-left: 25px;
+    color: #aaa;
+    font-size: 13px;
+    display: inline-block;
+    background-position: 0% 52%;
+}
+.article_content h2{
+    font-size: 21px;
+    padding-bottom: 10px;
+}
+.jumbotron {
+    padding-top: 56px;
+    padding-bottom: 56px;
+}
+.lead{
+    font-size: 16px;
+}

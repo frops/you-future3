@@ -1,2 +1,4 @@
 .idea
 .ftpconfig
+data/
+.DS_Store

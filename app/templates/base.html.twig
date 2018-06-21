@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"
-          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/css/album.css"/>
+    <link rel="stylesheet" href="/css/album.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
 
     <title>{% block title %}{% endblock %}</title>
     <meta name="description" content="{% block seoDescr %}{% endblock %}">
@@ -24,7 +25,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
@@ -33,76 +34,64 @@
     <meta property="og:type" content="{% block ogType %}{% endblock %}" />
     <meta property="og:url" content="{{ app.request.getSchemeAndHttpHost() }}{{ app.request.getBaseUrl ~ app.request.getPathInfo }}" />
     <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() }}/img/yf_logo.jpg" />
-    <meta name="telegram:channel" content="@you_future">
+    <meta name="telegram:channel" content="@you_future"> {% block og %}{% endblock %}
 
-    {% block og %}{% endblock %}
-
-    <meta charset="UTF-8">
-
-    {% if app.request.getSchemeAndHttpHost() matches '{https://you-future.ru}' %}
-        {% include 'blocks/ga.html.twig' %}
-    {% endif %}
-
-    {% block stylesheets %}{% endblock %}
+    <meta charset="UTF-8"> {% if app.request.getSchemeAndHttpHost() matches '{https://you-future.ru}' %} {% include 'blocks/ga.html.twig' %} {% endif %} {% block stylesheets %}{% endblock %}
 </head>
+
 <body>
-<header>
-    <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-md-7 py-4">
-                    <h4 class="text-white">О канале</h4>
-                    <p class="text-muted">Будущее совсем рядом, стремительно развиваются технологии, наука. Мы меняемся с каждым днем, появляются новые вещи, устройства, открытия.
-                        Размышления о будущем, что ждет нас, наших детей и внуков впереди.</p>
-                </div>
-                <div class="col-sm-4 offset-md-1 py-4">
-                    <h4 class="text-white">Наши контакты</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ path('about') }}" class="text-white">О блоге</a></li>
-                        <li><a href="http://t-do.ru/you_future" target="_blank" class="text-white">Телеграмм-канал >></a></li>
-                        <li class="text-white">Email: <img src="{{ asset('img/email.png') }}"></li>
-                    </ul>
+    <header>
+        <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">О канале</h4>
+                        <p class="text-muted">Будущее совсем рядом, стремительно развиваются технологии, наука. Мы меняемся с каждым днем, появляются новые вещи, устройства, открытия. Размышления о будущем, что ждет нас, наших детей и внуков впереди.</p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4 class="text-white">Наши контакты</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ path('about') }}" class="text-white">О блоге</a></li>
+                            <li><a href="http://t-do.ru/you_future" target="_blank" class="text-white">Телеграмм-канал >></a></li>
+                            <li class="text-white">Email: <img src="{{ asset('img/email.png') }}"></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="navbar navbar-dark bg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-            <a href="/" class="navbar-brand d-flex align-items-center">
+        <div class="navbar navbar-dark bg-dark box-shadow">
+            <div class="container d-flex justify-content-between">
+                <a href="/" class="navbar-brand d-flex align-items-center">
                 <strong>А что же дальше?</strong>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
-                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<main role="main">
-{% block body %}{% endblock %}
-</main>
+    <main role="main">
+        {% block body %}{% endblock %}
+    </main>
 
-<footer class="text-muted">
-    <div class="container">
-        <p class="float-right">
-            <a href="#">Наверх</a>
-        </p>
-        <p>Будущее совсем рядом, стремительно развиваются технологии, наука.</p>
-        <p>Мы меняемся с каждым днем, появляются новые вещи, устройства, открытия.</p>
-        <p> Размышления о будущем, что ждет нас, наших детей и внуков впереди.</p>
-    </div>
-</footer>
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right">
+                <a href="#">Наверх</a>
+            </p>
+            <p>Будущее совсем рядом, стремительно развиваются технологии, наука.</p>
+            <p>Мы меняемся с каждым днем, появляются новые вещи, устройства, открытия.</p>
+            <p> Размышления о будущем, что ждет нас, наших детей и внуков впереди.</p>
+        </div>
+    </footer>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-<script src="/bootstrap/js/bootstrap.min.js"
-        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-        crossorigin="anonymous"></script>
-{% block javascripts %}{% endblock %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="/bootstrap/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    {% block javascripts %}{% endblock %}
 </body>
+
 </html>
