@@ -1,11 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ post.title }}
-{% endblock %}
-{% block seoDescr %}{{ post.seoDescr | e }}
-{% endblock %}
-{% block seoKeywords %}{{ post.seoKeywords | e }}
-{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block seoDescr %}{{ post.seoDescr | e }}{% endblock %}
+{% block seoKeywords %}{{ post.seoKeywords | e }}{% endblock %}
 {% block ogType %}article{% endblock %}
 
 {% block og %}
