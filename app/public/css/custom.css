@@ -25,11 +25,11 @@
 }
 .article_content h2 {
     font-size: 21px;
+    padding-top: 20px;
     padding-bottom: 15px;
 }
 .article_content h3 {
-	font-size: 17px;
-	padding-bottom: 10px;
+	font-size: 18px;
 }
 .jumbotron {
     padding-top: 56px;
