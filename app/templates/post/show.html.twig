@@ -29,9 +29,9 @@
                 <div class="col-md-8 offset-md-2">
                     <div class="bar">
                         <div class="date">
-                            <span>2018-06-20</span></div>
+                            <span>{{ post.date.format('Y-m-d') }}</span></div>
                         <div class="counter">
-                            <span>256</span></div>
+                            <span>7</span></div>
                     </div>
                     <article class="article_content">
                         {{  post.getHtmlContent | raw}}
