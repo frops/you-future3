@@ -28,7 +28,7 @@
                         <div class="date">
                             <span>{{ post.date.format('Y-m-d') }}</span></div>
                         <div class="counter">
-                            <span>7</span></div>
+                            <span>{{ post.viewed }}</span></div>
                     </div>
                     <article class="article_content">
                         {{  post.getHtmlContent | raw}}

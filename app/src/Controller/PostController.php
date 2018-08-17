@@ -5,10 +5,10 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use \Parsedown;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -32,17 +32,28 @@ class PostController extends Controller
      * @param $month
      * @param $day
      * @param $slug
-     * @param PostRepository $postRepository
+     * @param Request $request
      * @return Response
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function show($year, $month, $day, $slug, PostRepository $postRepository): Response
+    public function show($year, $month, $day, $slug, Request $request): Response
     {
+        $cache = new FilesystemCache();
+
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
             ->findOneBy(['date' => \DateTime::createFromFormat("Y-m-d", "{$year}-{$month}-{$day}"), 'slug' => $slug]);
 
         if (!$post) {
             throw $this->createNotFoundException("Запись не найдена");
+        }
+
+        $cacheKey = 'post_viewed_' . $post->getId() . '_' . md5($request->headers->get('User-Agent'));
+
+        if (!$cache->get($cacheKey)) {
+            $post->incrementViewed();
+            $this->getDoctrine()->getManager()->flush();
+            $cache->set($cacheKey, 1, 30);
         }
 
         return $this->render('post/show.html.twig', ['post' => $post]);

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /post/new
+Disallow: /post/edit/*
+Host: https://you-future.ru
+Sitemap: https://you-future.ru/sitemap.xml

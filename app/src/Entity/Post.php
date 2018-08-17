@@ -63,6 +63,11 @@ class Post
      */
     private $subTitle;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $viewed;
+
     public function getId()
     {
         return $this->id;
@@ -165,6 +170,25 @@ class Post
     public function setSubTitle(?string $subTitle): self
     {
         $this->subTitle = $subTitle;
+
+        return $this;
+    }
+
+    public function getViewed(): ?int
+    {
+        return $this->viewed;
+    }
+
+    public function setViewed(int $viewed): self
+    {
+        $this->viewed = $viewed;
+
+        return $this;
+    }
+
+    public function incrementViewed(): self
+    {
+        $this->viewed++;
 
         return $this;
     }
