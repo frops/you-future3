@@ -43,7 +43,19 @@
     </url>
 
     <url>
-        <loc>https://you-future.ru/post/2018/05/28/nachalo</loc>
+        <loc>https://you-future.ru/post/2018/08/14/pro-taksistov-i-voditelei-v-budushem</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://you-future.ru/post/2018/08/23/pro-kompyternii-igri-v-buduzhem</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://you-future.ru/post/2018/08/27/pro-kvadrokoptery-i-letayushie-ustroistva-v-buduzhem</loc>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
