@@ -6,6 +6,15 @@
     padding-left: 10px;
     margin-bottom: 35px;
 }
+.tg_icon{
+	background: url('/img/icons/tg.png') no-repeat;
+	padding-left: 25px;
+	color: #aaa;
+	font-size: 13px;
+	display: inline-block;
+	margin-right: 15px;
+	background-position: 0% 52%;
+}
 .date{
     background: url('/img/icons/calendar.png') no-repeat;
     padding-left: 25px;
@@ -37,4 +46,19 @@
 }
 .lead{
     font-size: 16px;
+}
+
+@keyframes intro {
+	from {
+		filter: blur(5px);
+	}
+
+	to {
+		filter: blur(0);
+	}
+}
+
+.fk {
+	animation-name: intro;
+	animation-duration: 1s;
 }
