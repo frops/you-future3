@@ -36,7 +36,7 @@
     <meta property="og:type" content="{% block ogType %}{% endblock %}" />
     <meta property="og:url" content="{{ app.request.getSchemeAndHttpHost() }}{{ app.request.getBaseUrl ~ app.request.getPathInfo }}" />
     <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() }}/img/yf_logo.jpg" />
-    <meta name="telegram:channel" content="@you_future"> {% block og %}{% endblock %}
+    <meta name="telegram:channel" content="@future_tomorrow"> {% block og %}{% endblock %}
 
     {% if app.request.getSchemeAndHttpHost() matches '{https://you-future.ru}' %} {% include 'blocks/ga.html.twig' %} {% endif %} {% block stylesheets %}{% endblock %}
 </head>
@@ -54,7 +54,7 @@
                         <h4 class="text-white">Наши контакты</h4>
                         <ul class="list-unstyled">
                             <li><a href="{{ path('about') }}" class="text-white">О блоге</a></li>
-                            <li><a href="http://t-do.ru/you_future" target="_blank" class="text-white">Телеграмм-канал >></a></li>
+                            <li><a href="http://t-do.ru/future_tomorrow" target="_blank" class="text-white">Телеграмм-канал >></a></li>
                             <li class="text-white">Email: <img src="{{ asset('img/email.png') }}" alt="Email блога про будущее"></li>
                         </ul>
                     </div>
