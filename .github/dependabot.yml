@@ -1,0 +1,50 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/app"
+  schedule:
+    interval: daily
+    time: "12:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: symfony/web-server-bundle
+    versions:
+    - 4.4.19
+    - 4.4.20
+  - dependency-name: symfony/console
+    versions:
+    - 4.4.19
+    - 4.4.20
+  - dependency-name: symfony/security-bundle
+    versions:
+    - 4.4.19
+    - 4.4.20
+  - dependency-name: symfony/yaml
+    versions:
+    - 4.4.18
+    - 4.4.19
+    - 4.4.20
+  - dependency-name: symfony/validator
+    versions:
+    - 4.4.19
+    - 4.4.20
+  - dependency-name: symfony/form
+    versions:
+    - 4.4.19
+    - 4.4.20
+  - dependency-name: symfony/http-kernel
+    versions:
+    - 4.4.19
+    - 4.4.20
+  - dependency-name: symfony/maker-bundle
+    versions:
+    - 1.28.0
+    - 1.29.0
+    - 1.29.1
+  - dependency-name: symfony/asset
+    versions:
+    - 4.4.18
+    - 4.4.19
+  - dependency-name: symfony/process
+    versions:
+    - 4.4.19
